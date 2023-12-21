@@ -9,6 +9,9 @@ while true; do
   if [ "$hostname" = "$actualHostname" ]; then
     echo "C'est le même nom, Banane !"
   else
+sudo hostnamectl set-hostname "$hostname"
+echo "Nom d'hôte '$hostname' créé avec succès."
+
     break
   fi
 done
@@ -28,7 +31,7 @@ attempts=1
 # Demande de renseigner un mot de passe
 while [ "$attempts" -le 3 ]; do
   read -s -p "Entrez le mot de passe (au moins 8 caractères, au moins une majuscule, au moins un chiffre et au moins un caractère spécial) : " mdp
-  echo
+  
 
   # Vérification de la politique du mot de passe
  if [[ "$mdp" =~ .*[A-Z].* && "$mdp" =~ .*[\!\@\#\$\%\^\&\*\(\)\_\+\-\=].* && "$mdp" =~ .*[0-9].* && "${#mdp}" -ge 8 ]]; then
@@ -36,16 +39,16 @@ while [ "$attempts" -le 3 ]; do
 
     # Demande de confirmer le mot de passe
     read -s -p "Confirmez le mot de passe : " confirmation
-    echo
+    
 
     # Vérification de la correspondance avec la confirmation
     if [ "$mdp" = "$confirmation" ]; then
 
       # Création hote et user
-      sudo hostnamectl set-hostname "$hostname"
+      
       sudo useradd -m "$username"
-      sudo passwd "$username" <<<"$mdp"
-      echo "Nom d'hôte '$hostname' créé avec succès."
+     
+      
       echo "L'utilisateur '$username' a été créé avec succès."
       
       exit 0
@@ -60,5 +63,5 @@ while [ "$attempts" -le 3 ]; do
   attempts=$((attempts + 1))
 done
 
-echo "Impossible de configurer la machine '$hostname' et '$username' non créés."
+echo " les mots de passe ne correspondent.  '$username' non créés."
 exit 1
