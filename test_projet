@@ -31,7 +31,7 @@ while [ "$attempts" -le 3 ]; do
   echo
 
   # Vérification de la politique du mot de passe
-  if [[ "$mdp" =~ (.*[A-Z].*) && (.*[\!\@\#\$\%\^\&\*\(\)\_\+\-\=].*) && (.*[0-9].*) && (.{8,}) ]]; then
+if [[ "$mdp" =~ .*[A-Z].* && "$mdp" =~ .*[\!\@\#\$\%\^\&\*\(\)\_\+\-\=].* && "$mdp" =~ .*[0-9].* && "${#mdp}" -ge 8 ]]; then
 
     # Demande de confirmer le mot de passe
     read -s -p "Confirmez le mot de passe : " confirmation
